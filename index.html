@@ -6,22 +6,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>React para iniciantes</title>
 
-    <!-- Adicionamos os seguintes códigos no head --> 
-<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
-<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Adicionamos os seguintes códigos no head -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
 
 </head>
 <body>
-    <!--Elemento para montar o react-->    
-<div id="app"></div>
-<script type="text/babel">
 
-function App(){
-    return <div>Meu app</div>
-}
-ReactDOM.render(<App/>, document.getElementById('app'))
- </script>
+
+
+
+    <!--Elemento para montar o react-->
+    <div id="app"></div>
+    <script type="text/babel">
+
+
+
+        const Compras = () => {
+            const [contador, setContador] = React.useState(0)
+            console.log(contador);
+            function comprar(){
+                setContador(contador + 1);
+            }
+
+            return(
+                <div>
+                    
+                    <button onClick={comprar}> Comprar</button>
+                    <p>Total: {contador}</p>
+                    <p>Preço: R$ {contador * 250}</p>
+                    
+                    
+                    </div>
+            )
+        }
+
+    //Criando um componente de botão
+     const Button = () => {
+        return <button>Meu App</button>
+    }
+
+
+    //Outro componente
+
+    const Titulo = () => {
+        const numer = Math.random() * 100;
+        return <h1>My numer is ${numer}</h1>
+    }
+
+    const Produtos = () => {
+        function handleclick(event) {
+            alert ('Comprou ' + event.target.innerText);
+        }
+
+        return(
+            <div>
+                <button onClick={handleclick}>Camisa</button>
+                <button onClick={handleclick}>Bermuda</button>
+                </div>
+        )
+    }
+
+    const App = () => {
+        return <div>Meu app
+            
+            <Button/>
+            <Titulo/>
+            <Produtos/>
+            <Compras/>
+            
+            </div>
+    }
+
+
+
+   
+    ReactDOM.render(<App />, document.getElementById('app'))
+
+    </script>
 </body>
 </html>
