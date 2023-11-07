@@ -1,5 +1,4 @@
-## Configuração do ambiente
-
+## Principais Tópicos 
 Primeiramente, vamos para o [site oficial do React](https://reactjs.org/docs/add-react-to-a-website.html) que nos mostrará um passo a passo de como integrar o React em nosso HTML.
 
 ### Passo 1: Adicionando React ao HTML
@@ -399,3 +398,167 @@ Esta relacionada a organização e composição do aplicativo, não diz respeito
 º Como esse processo de criar um componente se torna repetitivo com o tempo: usamos então os **snippets**. Basicamente eles concentram um trecho de código em algumas letras.
 
 - Os componentes não precisam estar necessariamente separados dentro de arquivos diferentes dentro do nosso projeto, isso é feito somente pela organização.
+
+```jsx 
+
+// usando a sigla: rafce
+import React from 'react'
+
+const Footer = () => {
+    return (
+        <div>
+            
+        </div>
+    )
+}
+
+export default Footer
+``````
+
+## Interface
+Não existe limite para a composição de componentes, eles podem ser desde componentes gerais como Header e Footer até micro componentes como Input e Button
+
+```jsx
+
+import React from 'react';
+import Footer from './Footer';
+import Form from './Form/Form';
+import Header from './Header';
+
+
+const App = () => {
+
+    const handleScroll = (event) => {
+    console.log(event);
+}
+window.addEventListener('scroll', handleScroll);
+
+    return (
+        
+        
+    <div style={{ height: '200vh' }}>
+        <Form/>
+        <Header/>
+        <Footer/>
+        <button onClick={(event) => alert(event.target.innerText)}>Compre algo da loja</button>
+    
+    </div>
+    
+    )
+}
+
+export default App;
+``````
+
+## Return
+
+Importante considerar: Um componente deve sempre retornar algo. O retorno pode ser qualquer tipo de dado aceitado pelo JSX (String, array, um elemento JSX, null e etc) | Caso não exista esse retorno teremos um erro em nosso código.
+
+**React.Fragment**
+
+Um componente deve sempre retornar um elemento único no return. Caso você deseje retornar mais de um elemento, evolva os mesmos em uma div ou dentro do <React.Fragment></React.Fragment> ou <> </>
+
+- O return cria uma função e por isso deve retornar um elemento único
+- criar divs dentro de divs pode sujar a DOM o ideal seria usar o React.Fragment
+
+**Propriedades**
+
+Assim como uma função pode receber argumentos, podemos também passar argumentos aos componentes. Esses são conhecidos como propriedades ou props
+
+
+## Hooks ##
+    
+ O estado de uma aplicação representa as características dela naquele momento. Por exemplo:
+    
+os dados de um usuário foram carregados, o botão está ativo, o usuário esta na página de contato e etc. Podemos tomar mudanças de composição dos elementos que vemos em tela dependendo de seus respectivos estados
+    
+```jsx
+    // A constante ativo define o estado do botão
+    const ativo = true;
+    <button dissable={!ativo}>{ativo ? 'Botão ativo' : 'Botão inativo'} </button>
+    
+    // Esse trecho não renderiza da forma que achamos
+    
+    const App = () => {
+    let ativo = true;
+    
+    function handleClick() {
+      ativo = !ativo;
+      console.log(ativo)
+    }
+    
+    <button dissable={!ativo} onClick={handleClick}>{ativo ? 'Botão ativo' : 'Botão inativo'} </button>
+    ``````
+    
+
+``````
+
+
+
+## Conceituando Hooks:
+
+São funções especiais do React que permitem controlarmos o estado e o ciclo de vida dos componentes funcionais. Isso também só era possível com classes. Os hooks são métodos do objeto do React. O useState nos retorna um array com o valor inicial e uma função para modificar o estado atual.
+
+```jsx
+
+import React from "react";
+
+const App = () => {
+  const ativoHook = React.useState(false);
+  const ativoValor = ativoHook[0];
+  const atualizavoValor = ativoHook[1];
+  console.log(ativoValor);
+
+  function handleClick() {
+    atualizavoValor(!ativoValor);
+  }
+  return (
+    <div>
+      <button onClick={handleClick}>
+{ativoValor ? "Ativo" : "Inativo"}
+</button>
+    </div>
+  );
+};
+
+export default App;
+
+```
+**React.useState**
+
+O useState é uma função que retorna uma Array com 2 valores. O primeiro valor guarda o dado do estado atual, pode ser qualquer tipo de dado como strings, arrays, boolean, null, undefined e objetos. O segundo valor é uma função que pode ser utilizada para modificarmos o estado do primeiro valor. Quando a função de modificação do estado é ativada, todos os componentes que dependerem do estado, serão renderizados novamente e os seus filhos também. É isso que garante a reatividade de componentes funcionais no React
+
+. . .
+
+**Múltiplos Estados**
+
+Não existe limite para o uso do useState, podemos definir diversos no mesmo componente.
+
+E também podemos passar o tipo de dado que queremos.
+
+```jsx
+
+import React from "react";
+
+const App = () => {
+  const [ativo, setAtivo] = React.useState(false);
+  console.log(ativo);
+
+  const [dados, setDados] = React.useState({ nome: 'André', idade: '30' });
+  function handleClick() {
+    setAtivo(!ativo);
+    setDados({ ...dados, faculdade: 'Possui faculdade' })
+  }
+  return (
+    <div>
+      <p>{dados.nome}</p>
+      <p>{dados.idade}</p>
+      <p>{dados.faculdade}</p>
+      <button onClick={handleClick}>{ativo ? "Ativo" : "Inativo"}</button>
+    </div>
+  );
+};
+
+export default App;
+````
+
